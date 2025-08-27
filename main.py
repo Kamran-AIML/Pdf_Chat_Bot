@@ -12,6 +12,8 @@ import tempfile
 import streamlit as st
 from streamlit_lottie import st_lottie
 import json
+from langchain.vectorstores import FAISS
+
 
 
 import asyncio
@@ -32,12 +34,9 @@ load_dotenv()
 # Init LLM
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash",
                              temperature=0.1,
-                             max_tokens=1000)
+                             max_tokens=750)
 
 st.set_page_config(page_title="📊 Chat With Pdf's - (Finance Domain)", layout="wide")
-# st.title("📊 Finance Management Expert")
-# st.write("Upload a finance/management PDF and ask questions about it.")
-# st.write("⚠️ Prototype limitation: Please upload PDF <= 20 pages.")
 
 # --------------------------------------------------------------------------------------------
 
@@ -52,7 +51,7 @@ col1, col2, col3 = st.columns([3, 1, 1])  # Middle column (col2) for the animati
 with col1:
     st.title("📊 Chat With Pdf's")
     st.write("Upload a finance/management PDF and ask questions about it.")
-    st.write("⚠️ Prototype limitation: Please upload PDF <= 20 pages.")
+    st.write("⚠️ Prototype limitation: Please upload PDF <= 50 pages.")
 
 with col2:
     lottie_animation = load_lottie("assets/Book_Reading.json")
@@ -77,12 +76,15 @@ if uploaded_file:
     docs = text_splitter.split_documents(data)
 
     # Create embeddings + vectorstore
+    # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    # vectorstore = Chroma.from_documents(docs, embedding=embeddings)
+    # retriever = vectorstore.as_retriever(search_type="similarity",search_kwargs={"k": 8} )
+
+    # Create embeddings + FAISS vectorstore
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    vectorstore = Chroma.from_documents(docs, embedding=embeddings)
-    retriever = vectorstore.as_retriever(
-                                search_type="similarity",
-                                search_kwargs={"k": 8}
-                                )
+    vectorstore = FAISS.from_documents(docs, embeddings)
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 8})
+
 
     # System Prompt
     system_prompt = (

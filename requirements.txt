@@ -12,7 +12,8 @@ langchain-chroma
 langgraph
 
 # Vectorstore
-chromadb
+# chromadb>=0.3.32
+faiss-cpu  # Added FAISS
 
 # PDF loading
 pypdf

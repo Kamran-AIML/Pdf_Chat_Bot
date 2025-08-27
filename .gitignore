@@ -1,2 +1,23 @@
 # Environment variables
 .env
+
+# Python virtual environments
+PDF_Rag_env/
+venv/
+env/
+
+# Byte-compiled / cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Streamlit files
+.streamlit/
+
+# OS files
+.DS_Store
+Thumbs.db
