@@ -1,0 +1,27 @@
+# Core
+python-dotenv
+streamlit
+
+# LangChain ecosystem
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+langchain-anthropic
+langchain-chroma
+langgraph
+
+# Vectorstore
+chromadb
+
+# PDF loading
+pypdf
+
+# Search Tool (if you want Tavily)
+tavily-python
+
+nest_asyncio   
+cryptography>=42.0.5
+
+# Animation
+streamlit-lottie
